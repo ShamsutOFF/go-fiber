@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v3/middleware/recover"
 	"go-fiber/config"
 	"go-fiber/internal/home"
 	"log"
@@ -14,6 +15,7 @@ func main() {
 	log.Println(dbConf)
 
 	app := fiber.New()
+	app.Use(recover.New())
 
 	home.NewHomeHandler(app)
 
