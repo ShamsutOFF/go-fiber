@@ -24,7 +24,7 @@ func NewHomeHandler(router fiber.Router) {
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	component := views.Hello("Adel")
+	component := views.Main()
 	return tadapter.Render(c, component)
 }
 
