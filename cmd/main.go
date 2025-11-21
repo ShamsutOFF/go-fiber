@@ -1,20 +1,36 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
+	"github.com/rs/zerolog"
+	"time"
+
 	"go-fiber/config"
 	"go-fiber/internal/home"
-	"log"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/log"
 )
 
 func main() {
 	config.Init()
-	dbConf := config.NewDatabaseConfig()
-	log.Println(dbConf)
+	config.NewDatabaseConfig()
+	logConfig := config.NewLogConfig()
 
 	app := fiber.New()
+
+	zerolog.SetGlobalLevel(zerolog.Level(logConfig.Level))
+
+	if logConfig.Format == "json" {
+		app.Use(logger.New(logger.Config{
+			Format:     `{"time":"${time}","method":"${method}","path":"${path}","status":${status},"latency":${latency},"ip":"${ip}"}` + "\n",
+			TimeFormat: time.RFC3339,
+		}))
+	} else {
+		app.Use(logger.New())
+	}
+
 	app.Use(recover.New())
 
 	home.NewHomeHandler(app)

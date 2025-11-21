@@ -1,6 +1,8 @@
 package home
 
-import "github.com/gofiber/fiber/v3"
+import (
+	"github.com/gofiber/fiber/v3"
+)
 
 type HomeHandler struct {
 	router fiber.Router
@@ -20,5 +22,5 @@ func (h *HomeHandler) home(c fiber.Ctx) error {
 }
 
 func (h *HomeHandler) error(c fiber.Ctx) error {
-	return c.SendString("Hello, World from Error 👋!")
+	return fiber.NewError(fiber.StatusConflict, "error")
 }
