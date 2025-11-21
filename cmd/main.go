@@ -1,17 +1,16 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v3/middleware/logger"
-	"github.com/gofiber/fiber/v3/middleware/recover"
-	"github.com/gofiber/template/html/v3"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/rs/zerolog"
 	"time"
 
 	"go-fiber/config"
 	"go-fiber/internal/home"
 
-	"github.com/gofiber/fiber/v3"
-	"github.com/gofiber/fiber/v3/log"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 )
 
 func main() {
@@ -19,12 +18,7 @@ func main() {
 	config.NewDatabaseConfig()
 	logConfig := config.NewLogConfig()
 
-	// Инициализация HTML шаблонов
-	engine := html.New("./templates", ".html")
-
-	app := fiber.New(fiber.Config{
-		Views: engine, // Подключаем движок шаблонов
-	})
+	app := fiber.New()
 
 	zerolog.SetGlobalLevel(zerolog.Level(logConfig.Level))
 
