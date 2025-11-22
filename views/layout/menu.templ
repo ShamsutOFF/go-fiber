@@ -1,0 +1,37 @@
+package layout
+
+templ Menu() {
+	@MenuStyle()
+	<div class="menu">
+		<div class="menu_logo">
+			Лого
+		</div>
+		<div class="menu_right">
+			<a class="menu_right-link">Войти</a>
+		</div>
+	</div>
+}
+
+templ MenuStyle() {
+	<style>
+        .menu {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 20px 0;
+        }
+        .menu_right{
+            display: flex;
+            gap: 20px;
+        }
+        .menu_right-link{
+            text-decoration: none;
+            color: #FFFFFF;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .menu_right-link:hover{
+            color: #9f9f9f;
+        }
+    </style>
+}

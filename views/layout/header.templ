@@ -10,6 +10,7 @@ css headerClass(percent int) {
 
 templ Header() {
 	<div class={ headerClass(100) }>
+		@Menu()
 		{ children... }
 	</div>
 }
