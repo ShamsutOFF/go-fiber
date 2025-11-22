@@ -62,7 +62,7 @@ func MenuStyle() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n        .menu {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between;\n            padding: 20px 0;\n        }\n        .menu_right{\n            display: flex;\n            gap: 20px;\n        }\n        .menu_right-link{\n            text-decoration: none;\n            color: #FFFFFF;\n            font-size: 16px;\n            cursor: pointer;\n        }\n        .menu_right-link:hover{\n            color: #9f9f9f;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<style>\n        .menu {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between;\n            padding: 20px 0;\n        }\n        .menu_right{\n            display: flex;\n            gap: 20px;\n        }\n        .menu_right-link{\n            text-decoration: none;\n            color: var(--color-white);\n            font-size: 16px;\n            cursor: pointer;\n        }\n        .menu_right-link:hover{\n            color: #9f9f9f;\n        }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
