@@ -33,6 +33,7 @@ func main() {
 	}
 
 	app.Use(recover.New())
+	app.Static("/public", "./public")
 
 	home.NewHomeHandler(app)
 

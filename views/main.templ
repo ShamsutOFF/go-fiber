@@ -4,11 +4,16 @@ import "go-fiber/views/components"
 import "go-fiber/views/layout"
 
 templ Main() {
-	<main>
-		@layout.Header() {
-			@components.Title("Найди работу своей мечты")
-			@components.SubTitle("Простой поиск работы")
-		}
-		Main
-	</main>
+	@layout.Layout(layout.LayoutProps{
+		Title: "Найди работу мечты",
+		MetaDescription: "Сайт по поиску работы мечты",
+	}) {
+		<main>
+			@layout.Header() {
+				@components.Title("Найди работу своей мечты")
+				@components.SubTitle("Простой поиск работы")
+			}
+			Main
+		</main>
+	}
 }
