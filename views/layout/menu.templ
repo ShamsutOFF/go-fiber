@@ -1,13 +1,16 @@
 package layout
 
+import "go-fiber/views/components"
+
 templ Menu() {
 	@MenuStyle()
 	<div class="menu">
-		<div class="menu_logo">
-			Лого
-		</div>
+		<img src="/public/images/logo.svg"/>
 		<div class="menu_right">
 			<a class="menu_right-link">Войти</a>
+			@components.LinkButton("/register") {
+				<span>Зарегистрироваться</span>
+			}
 		</div>
 	</div>
 }
@@ -19,10 +22,14 @@ templ MenuStyle() {
             flex-direction: row;
             justify-content: space-between;
             padding: 20px 0;
+            max-width: 1290px;
+            align-items: center;
+            width: 100%;
         }
         .menu_right{
             display: flex;
             gap: 20px;
+            align-items: center;
         }
         .menu_right-link{
             text-decoration: none;

@@ -1,16 +1,21 @@
 package layout
 
-import "fmt"
-
-css headerClass(percent int) {
-	background: { "#222222" };
-	width: { fmt.Sprintf("%d%%", percent) };
-	text-align: { "center" };
-}
-
 templ Header() {
-	<div class={ headerClass(100) }>
+	@HeaderStyle()
+	<div class="header">
 		@Menu()
 		{ children... }
 	</div>
+}
+
+templ HeaderStyle() {
+	<style>
+		.header {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			background: #222222;
+		}
+	</style>
 }
