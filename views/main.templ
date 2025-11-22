@@ -1,10 +1,14 @@
 package views
 
 import "go-fiber/views/components"
+import "go-fiber/views/layout"
 
 templ Main() {
 	<main>
-		@components.Title("Найди работу своей мечты")
+		@layout.Header() {
+			@components.Title("Найди работу своей мечты")
+			@components.SubTitle("Простой поиск работы")
+		}
 		Main
 	</main>
 }

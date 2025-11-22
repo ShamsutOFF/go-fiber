@@ -1,0 +1,15 @@
+package layout
+
+import "fmt"
+
+css headerClass(percent int) {
+	background: { "#222222" };
+	width: { fmt.Sprintf("%d%%", percent) };
+	text-align: { "center" };
+}
+
+templ Header() {
+	<div class={ headerClass(100) }>
+		{ children... }
+	</div>
+}

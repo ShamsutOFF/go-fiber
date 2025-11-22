@@ -1,10 +1,11 @@
 package main
 
 import (
+	"time"
+
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/rs/zerolog"
-	"time"
 
 	"go-fiber/config"
 	"go-fiber/internal/home"
