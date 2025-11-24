@@ -83,7 +83,7 @@ func LinkButtonStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\n    .link-button{\n        padding: 15px 20px;\n        background-color: var(--color-primary);\n        color: var(--color-white);\n        text-decoration: none;\n        border-radius: 8px;\n    }\n\n    .link-button:hover {\n        background-color: var(--color-primary-hover);\n    }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\r\n    .link-button{\r\n        padding: 15px 20px;\r\n        background-color: var(--color-primary);\r\n        color: var(--color-white);\r\n        text-decoration: none;\r\n        border-radius: 8px;\r\n    }\r\n\r\n    .link-button:hover {\r\n        background-color: var(--color-primary-hover);\r\n    }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -90,7 +90,7 @@ func MenuStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\n        .menu {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between;\n            padding: 20px 0;\n            max-width: 1290px;\n            align-items: center;\n            width: 100%;\n        }\n        .menu_right{\n            display: flex;\n            gap: 20px;\n            align-items: center;\n        }\n        .menu_right-link{\n            text-decoration: none;\n            color: var(--color-white);\n            font-size: 16px;\n            cursor: pointer;\n        }\n        .menu_right-link:hover{\n            color: #9f9f9f;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\r\n        .menu {\r\n            display: flex;\r\n            flex-direction: row;\r\n            justify-content: space-between;\r\n            padding: 20px 0;\r\n            max-width: 1290px;\r\n            align-items: center;\r\n            width: 100%;\r\n        }\r\n        .menu_right{\r\n            display: flex;\r\n            gap: 20px;\r\n            align-items: center;\r\n        }\r\n        .menu_right-link{\r\n            text-decoration: none;\r\n            color: var(--color-white);\r\n            font-size: 16px;\r\n            cursor: pointer;\r\n        }\r\n        .menu_right-link:hover{\r\n            color: #9f9f9f;\r\n        }\r\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
