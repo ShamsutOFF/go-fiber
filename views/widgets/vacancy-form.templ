@@ -1,0 +1,85 @@
+package widgets
+
+import "go-fiber/views/components"
+
+templ VacancyForm() {
+	@VacancyFormStyle()
+	<div class="vacancy-form">
+		@components.Title2("Опубликовать вакансию")
+		<p class="vacancy-form__text">Введите все необходимые данные для публикации</p>
+		<form>
+			<div class="vacancy-form__inputs">
+				@components.Input(components.InputProps{
+					Placeholder: "Должность",
+					Name:        "role",
+				})
+				@components.Input(components.InputProps{
+					Placeholder: "Название компании",
+					Name:        "company",
+				})
+				@components.Input(components.InputProps{
+					Placeholder: "Сфера компании",
+					Name:        "type",
+				})
+				@components.Input(components.InputProps{
+					Placeholder: "Заработная плата",
+					Name:        "salary",
+				})
+				@components.Input(components.InputProps{
+					Placeholder: "Расположение",
+					Name:        "location",
+				})
+				@components.Input(components.InputProps{
+					Placeholder: "Коннтактный email",
+					Name:        "email",
+				})
+			</div>
+			<div class="vacancy-form__button">
+				@components.SubmitButton() {
+					<span>Опубликовать вакансию</span>
+				}
+			</div>
+		</form>
+	</div>
+}
+
+templ VacancyFormStyle() {
+	<style>
+    .vacancy-form__text {
+        overflow: hidden;
+        color: var(--color-black);
+        text-align: center;
+        white-space: nowrap;
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 60px;
+    }
+
+	.vacancy-form{
+        max-width: 890px;
+        width: 100%;
+        align-content: center;
+        justify-content: center;
+	}
+
+	.vacancy-form form{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+	}
+
+    .vacancy-form__inputs{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 24px;
+        margin-bottom: 30px;
+    }
+
+    .vacancy-form__button {
+        display: flex;
+        justify-content: center;
+    }
+	</style>
+}
