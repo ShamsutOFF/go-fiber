@@ -5,6 +5,7 @@ import (
 	"go-fiber/pkg/validator"
 	"go-fiber/views/components"
 	"html/template"
+	"time"
 
 	"github.com/a-h/templ"
 	"github.com/gobuffalo/validate"
@@ -38,6 +39,7 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 		},
 	)
 
+	time.Sleep(time.Second * 2)
 	var component templ.Component
 
 	if len(errors.Errors) > 0 {
