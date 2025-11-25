@@ -5,9 +5,15 @@ import "go-fiber/views/components"
 templ VacancyForm() {
 	@VacancyFormStyle()
 	<div class="vacancy-form">
+		<div id="vacancy-result"></div>
 		@components.Title2("Опубликовать вакансию")
 		<p class="vacancy-form__text">Введите все необходимые данные для публикации</p>
-		<form>
+		<form
+			hx-post="/vacancy"
+			hx-triger="submit"
+			hx-target="#vacancy-result"
+			hx-swap="innerHTML"
+		>
 			<div class="vacancy-form__inputs">
 				@components.Input(components.InputProps{
 					Placeholder: "Должность",

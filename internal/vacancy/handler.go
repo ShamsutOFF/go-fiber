@@ -1,7 +1,10 @@
 package vacancy
 
 import (
+	"go-fiber/pkg/tadapter"
+	"go-fiber/views/components"
 	"html/template"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -21,5 +24,8 @@ func NewVacancyHandler(router fiber.Router) {
 }
 
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
-	return c.SendString("createVacancy")
+	emai := c.FormValue("email")
+	log.Println(emai)
+	component := components.Notification("Вакансия успешно создана")
+	return tadapter.Render(c, component)
 }
