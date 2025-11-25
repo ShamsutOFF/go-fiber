@@ -29,13 +29,44 @@ func NewVacancyHandler(router fiber.Router) {
 
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 	form := VacancyCreateForm{
-		Email: c.FormValue("email"),
+		Email:    c.FormValue("email"),
+		Location: c.FormValue("location"),
+		Type:     c.FormValue("type"),
+		Company:  c.FormValue("company"),
+		Salary:   c.FormValue("salary"),
+		Role:     c.FormValue("role"),
 	}
+
 	errors := validate.Validate(
 		&validators.EmailIsPresent{
 			Name:    "Email",
 			Field:   form.Email,
 			Message: "Email не задан или не верный",
+		},
+		&validators.StringIsPresent{
+			Name: "Location",
+			Field:   form.Location,
+			Message: "Расположение не задано",
+		},
+		&validators.StringIsPresent{
+			Name: "Type",
+			Field:   form.Type,
+			Message: "Сфера компании не задано",
+		},
+		&validators.StringIsPresent{
+			Name: "Company",
+			Field:   form.Company,
+			Message: "Название компании не задано",
+		},
+		&validators.StringIsPresent{
+			Name: "Role",
+			Field:   form.Role,
+			Message: "Должность не задана",
+		},
+		&validators.StringIsPresent{
+			Name: "Salary",
+			Field:   form.Salary,
+			Message: "Зарплата не задана",
 		},
 	)
 
