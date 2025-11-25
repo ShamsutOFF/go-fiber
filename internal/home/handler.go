@@ -18,9 +18,8 @@ func NewHomeHandler(router fiber.Router) {
 		router: router,
 	}
 
-	api := handler.router.Group("/api")
-	api.Get("/", handler.home)
-	api.Get("/error", handler.error)
+	handler.router.Get("/", handler.home)
+	handler.router.Get("/error", handler.error)
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {

@@ -9,6 +9,7 @@ import (
 
 	"go-fiber/config"
 	"go-fiber/internal/home"
+	"go-fiber/internal/vacancy"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
@@ -36,6 +37,7 @@ func main() {
 	app.Static("/public", "./public")
 
 	home.NewHomeHandler(app)
+	vacancy.NewVacancyHandler(app)
 
 	log.Fatal(app.Listen(":3000"))
 }
