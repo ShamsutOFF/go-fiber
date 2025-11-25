@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 
+	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -26,6 +27,19 @@ func NewVacancyHandler(router fiber.Router) {
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 	emai := c.FormValue("email")
 	log.Println(emai)
-	component := components.Notification("Вакансия успешно создана")
+	var component templ.Component
+	
+	if emai == "" {
+		component = components.Notification(
+			"Не задан email",
+			components.NotificationFail,
+		)
+		return tadapter.Render(c, component)
+	}
+
+	component = components.Notification(
+		"Вакансия успешно создана",
+		components.NotificationSuccess,
+	)
 	return tadapter.Render(c, component)
 }
