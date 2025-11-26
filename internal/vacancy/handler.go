@@ -5,7 +5,6 @@ import (
 	"go-fiber/pkg/validator"
 	"go-fiber/views/components"
 	"html/template"
-	"time"
 
 	"github.com/a-h/templ"
 	"github.com/gobuffalo/validate"
@@ -44,33 +43,33 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 			Message: "Email не задан или не верный",
 		},
 		&validators.StringIsPresent{
-			Name: "Location",
+			Name:    "Location",
 			Field:   form.Location,
 			Message: "Расположение не задано",
 		},
 		&validators.StringIsPresent{
-			Name: "Type",
+			Name:    "Type",
 			Field:   form.Type,
 			Message: "Сфера компании не задано",
 		},
 		&validators.StringIsPresent{
-			Name: "Company",
+			Name:    "Company",
 			Field:   form.Company,
 			Message: "Название компании не задано",
 		},
 		&validators.StringIsPresent{
-			Name: "Role",
+			Name:    "Role",
 			Field:   form.Role,
 			Message: "Должность не задана",
 		},
 		&validators.StringIsPresent{
-			Name: "Salary",
+			Name:    "Salary",
 			Field:   form.Salary,
 			Message: "Зарплата не задана",
 		},
 	)
 
-	time.Sleep(time.Second * 2)
+	//time.Sleep(time.Second * 2)
 	var component templ.Component
 
 	if len(errors.Errors) > 0 {
