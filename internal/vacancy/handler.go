@@ -70,7 +70,7 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 		},
 	)
 
-	time.Sleep(time.Second * 2)
+	//time.Sleep(time.Second * 2)
 	var component templ.Component
 
 	if len(errors.Errors) > 0 {
