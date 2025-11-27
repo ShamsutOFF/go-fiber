@@ -42,3 +42,17 @@ func (repo *VacancyRepository) addVacancy(form *VacancyCreateForm) error {
 	}
 	return nil
 }
+
+func (repo *VacancyRepository) getAllVacancies() ([]Vacancy, error) {
+	query := `SELECT * FROM vacancies`
+	rows, err := repo.Dbpool.Query(context.Background(), query)
+	if err != nil {
+		return nil, fmt.Errorf("Невозможно получить вакансии %w", err)
+	}
+	vacancies, err := pgx.CollectRows(rows, pgx.RowToStructByName[Vacancy])
+	if err != nil {
+		return nil, fmt.Errorf("Невозможно получить вакансии %w", err)
+	}
+	defer rows.Close()
+	return vacancies, nil
+}

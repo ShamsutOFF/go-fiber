@@ -28,6 +28,15 @@ func NewVacancyHandler(router fiber.Router, repository *VacancyRepository, custo
 
 	vacancyGroup := handler.router.Group("/vacancy")
 	vacancyGroup.Post("/", handler.createVacancy)
+	vacancyGroup.Get("/", handler.getAllVacancies)
+}
+
+func (h *VacancyHandler) getAllVacancies(c *fiber.Ctx) error {
+	vacancies, err := h.repository.getAllVacancies()
+	if err != nil {
+		h.customLogger.Error().Msg(err.Error())
+	}
+	return c.JSON(vacancies)
 }
 
 func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
