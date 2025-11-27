@@ -13,8 +13,10 @@ templ VacancyForm() {
 			hx-trigger="submit"
 			hx-target="#vacancy-result"
 			hx-target-error="#vacancy-result"
-			hx-swap="innerHTML swap:1s"
-			hx-on::after-request="if(event.detail.successful) this.reset()"
+			hx-swap="innerHTML"
+			data-success="false"
+			hx-on::before-request="this.dataset.success = 'false'"
+			hx-on::after-request="if(event.detail.xhr.status === 200) { this.reset(); this.dataset.success = 'true'; }"
 		>
 			<div class="vacancy-form__inputs">
 				@components.Input(components.InputProps{

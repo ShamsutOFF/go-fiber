@@ -3,6 +3,7 @@ package views
 import "go-fiber/views/components"
 import "go-fiber/views/layout"
 import "go-fiber/views/widgets"
+import "time"
 
 templ Main() {
 	@layout.Layout(layout.LayoutProps{
@@ -15,6 +16,15 @@ templ Main() {
 				@components.Title("Найди работу своей мечты")
 				@components.SubTitle("Простой поиск работы")
 			}
+			@components.VacancyCard(components.VacancyCardProps{
+				Email:       "",
+				Location:    "Online",
+				Salary:      "10000$",
+				CompanyType: "IT",
+				Company:     "PurpleCode",
+				Createdat:   time.Now(),
+				Role:        "Копирайтер",
+			})
 			<div class="main__submit-form">
 				@widgets.VacancyForm()
 			</div>
