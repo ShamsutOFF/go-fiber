@@ -44,8 +44,12 @@ func main() {
 	dbpool := database.CreateDbPool(dbConfig, &logGlob.Log)
 	defer dbpool.Close()
 
+	// Репозитории
+	vacancyRepo := vacancy.NewVacancyRepository(dbpool, &logGlob.Log)
+
+	// Регистрируем обработчики
 	home.NewHomeHandler(app)
-	vacancy.NewVacancyHandler(app)
+	vacancy.NewVacancyHandler(app, vacancyRepo, &logGlob.Log)
 
 	logGlob.Info().Str("port", "3000").Msg("Server started")
 	logGlob.Fatal().Err(app.Listen(":3000")).Msg("Server failed to start")
