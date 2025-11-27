@@ -4,6 +4,7 @@ import (
 	"go-fiber/pkg/tadapter"
 	"go-fiber/pkg/validator"
 	"go-fiber/views/components"
+	"net/http"
 
 	"github.com/a-h/templ"
 	"github.com/gobuffalo/validate"
@@ -80,7 +81,7 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 			validator.FormatErrors(errors),
 			components.NotificationFail,
 		)
-		return tadapter.Render(c, component)
+		return tadapter.Render(c, component, http.StatusBadRequest)
 	}
 
 	err := h.repository.addVacancy(&form)
@@ -90,11 +91,11 @@ func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 			"Произошла ошибка на сервере",
 			components.NotificationFail,
 		)
-		return tadapter.Render(c, component)
+		return tadapter.Render(c, component, http.StatusBadRequest)
 	}
 	component = components.Notification(
 		"Вакансия успешно создана",
 		components.NotificationSuccess,
 	)
-	return tadapter.Render(c, component)
+	return tadapter.Render(c, component, http.StatusOK)
 }

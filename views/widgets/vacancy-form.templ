@@ -4,7 +4,7 @@ import "go-fiber/views/components"
 
 templ VacancyForm() {
 	@VacancyFormStyle()
-	<div class="vacancy-form">
+	<div class="vacancy-form" hx-ext="response-targets">
 		<div id="vacancy-result"></div>
 		@components.Title2("Опубликовать вакансию")
 		<p class="vacancy-form__text">Введите все необходимые данные для публикации</p>
@@ -12,7 +12,9 @@ templ VacancyForm() {
 			hx-post="/vacancy"
 			hx-trigger="submit"
 			hx-target="#vacancy-result"
+			hx-target-error="#vacancy-result"
 			hx-swap="innerHTML swap:1s"
+			hx-on::after-request="if(event.detail.successful) this.reset()"
 		>
 			<div class="vacancy-form__inputs">
 				@components.Input(components.InputProps{
@@ -43,7 +45,7 @@ templ VacancyForm() {
 			<div class="vacancy-form__button">
 				@components.SubmitButton() {
 					<div class="vacancy-form__submit">Опубликовать вакансию</div>
-                    <div class="vacancy-form__loader"></div>
+					<div class="vacancy-form__loader"></div>
 				}
 			</div>
 		</form>

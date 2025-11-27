@@ -4,6 +4,7 @@ import (
 	"go-fiber/pkg/tadapter"
 	"go-fiber/views"
 	"html/template"
+	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -24,7 +25,7 @@ func NewHomeHandler(router fiber.Router) {
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	component := views.Main()
-	return tadapter.Render(c, component)
+	return tadapter.Render(c, component, http.StatusOK)
 }
 
 func (h *HomeHandler) error(c *fiber.Ctx) error {
