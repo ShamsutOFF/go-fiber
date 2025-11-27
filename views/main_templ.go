@@ -11,9 +11,9 @@ import templruntime "github.com/a-h/templ/runtime"
 import "go-fiber/views/components"
 import "go-fiber/views/layout"
 import "go-fiber/views/widgets"
-import "time"
+import "go-fiber/internal/vacancy"
 
-func Main() templ.Component {
+func Main(vacancies []vacancy.Vacancy) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -84,19 +84,25 @@ func Main() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = components.VacancyCard(components.VacancyCardProps{
-				Email:       "",
-				Location:    "Online",
-				Salary:      "10000$",
-				CompanyType: "IT",
-				Company:     "PurpleCode",
-				Createdat:   time.Now(),
-				Role:        "Копирайтер",
-			}).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"main__submit-form\">")
+			for _, vacancy := range vacancies {
+				templ_7745c5c3_Err = components.VacancyCard(components.VacancyCardProps{
+					Email:       vacancy.Email,
+					Location:    vacancy.Location,
+					Salary:      vacancy.Salary,
+					CompanyType: vacancy.Type,
+					Company:     vacancy.Company,
+					Createdat:   vacancy.CreatedAt,
+					Role:        vacancy.Role,
+				}).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div><div class=\"main__submit-form\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -104,7 +110,7 @@ func Main() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</div></main>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</div></main>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -142,7 +148,7 @@ func MainStyle() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\r\n\t.main__submit-form{\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tjustify-content: center;\r\n\t\tbackground: rgba(48, 150, 137, 0.10);\r\n\t\tpadding: 60px 0 120px 0;\r\n\t</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<style>\r\n\t.main__submit-form{\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tjustify-content: center;\r\n\t\tbackground: rgba(48, 150, 137, 0.10);\r\n\t\tpadding: 60px 0 120px 0;\r\n\t</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

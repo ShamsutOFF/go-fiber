@@ -43,7 +43,7 @@ func (repo *VacancyRepository) addVacancy(form *VacancyCreateForm) error {
 	return nil
 }
 
-func (repo *VacancyRepository) getAllVacancies() ([]Vacancy, error) {
+func (repo *VacancyRepository) GetAllVacancies() ([]Vacancy, error) {
 	query := `SELECT * FROM vacancies`
 	rows, err := repo.Dbpool.Query(context.Background(), query)
 	if err != nil {

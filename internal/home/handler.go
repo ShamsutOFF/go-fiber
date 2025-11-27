@@ -1,22 +1,31 @@
 package home
 
 import (
+	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/tadapter"
 	"go-fiber/views"
-	"html/template"
+
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/rs/zerolog"
 )
 
 type HomeHandler struct {
-	router fiber.Router
-	tmpl   *template.Template
+	router       fiber.Router
+	customLogger *zerolog.Logger
+	repository   *vacancy.VacancyRepository
 }
 
-func NewHomeHandler(router fiber.Router) {
+func NewHomeHandler(
+	router fiber.Router,
+	customLogger *zerolog.Logger,
+	repository *vacancy.VacancyRepository,
+) {
 	handler := &HomeHandler{
-		router: router,
+		router:       router,
+		repository:   repository,
+		customLogger: customLogger,
 	}
 
 	handler.router.Get("/", handler.home)
@@ -24,7 +33,12 @@ func NewHomeHandler(router fiber.Router) {
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	component := views.Main()
+	vacancies, err := h.repository.GetAllVacancies()
+	if err != nil {
+		h.customLogger.Error().Msg(err.Error())
+		return c.SendStatus(http.StatusInternalServerError)
+	}
+	component := views.Main(vacancies)
 	return tadapter.Render(c, component, http.StatusOK)
 }
 
