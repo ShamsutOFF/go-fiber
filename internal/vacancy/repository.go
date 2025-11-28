@@ -44,7 +44,7 @@ func (repo *VacancyRepository) addVacancy(form *VacancyCreateForm) error {
 }
 
 func (repo *VacancyRepository) GetAllVacancies() ([]Vacancy, error) {
-	query := `SELECT * FROM vacancies`
+	query := `SELECT * FROM vacancies ORDER BY createdat DESC`
 	rows, err := repo.Dbpool.Query(context.Background(), query)
 	if err != nil {
 		return nil, fmt.Errorf("Невозможно получить вакансии %w", err)
