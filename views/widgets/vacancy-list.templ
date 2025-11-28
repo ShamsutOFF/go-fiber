@@ -2,8 +2,9 @@ package widgets
 
 import "go-fiber/views/components"
 import "go-fiber/internal/vacancy"
+import "fmt"
 
-templ VacancyList(vacancies []vacancy.Vacancy) {
+templ VacancyList(vacancies []vacancy.Vacancy, pagesCount, page int) {
 	@VacancyListStyle()
 	<div class="vacancy-list__wrapper">
 		@components.Title2("Последние вакансии", false)
@@ -20,6 +21,20 @@ templ VacancyList(vacancies []vacancy.Vacancy) {
 					Role:        vacancy.Role,
 				})
 			}
+		</div>
+		<div class="vacancy-list__pagination">
+			<div class="vacancy-list__pagination-item">
+				if page != 1 {
+					<img src="/public/icons/chevron-left.svg" alt="Срелка влево"/>
+					<a href={ templ.SafeURL(fmt.Sprintf("/?page=%d", page-1)) }>Предыдущие</a>
+				}
+			</div>
+			<div class="vacancy-list__pagination-item">
+				if page != pagesCount {
+					<a href={ templ.SafeURL(fmt.Sprintf("/?page=%d", page+1)) }>Следующие</a>
+					<img src="/public/icons/chevron-right.svg" alt="Срелка вправо"/>
+				}
+			</div>
 		</div>
 	</div>
 }
@@ -42,6 +57,29 @@ templ VacancyListStyle() {
             align-items: center;
             gap: 24px;
             flex-direction: column;
+			margin-bottom: 50px;
         }
+
+		.vacancy-list__pagination{
+			display: flex;
+			justify-content: space-between;
+			gap: 24px;
+
+		}
+		.vacancy-list__pagination-item {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+		}
+
+		.vacancy-list__pagination-item a {
+			text-decoration: none;
+			color: #6C757D
+		}
+
+		
+		.vacancy-list__pagination-item a:hover {
+			color: #545a60
+		}
 	</style>
 }

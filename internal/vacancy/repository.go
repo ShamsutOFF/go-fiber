@@ -43,9 +43,23 @@ func (repo *VacancyRepository) addVacancy(form *VacancyCreateForm) error {
 	return nil
 }
 
-func (repo *VacancyRepository) GetAllVacancies() ([]Vacancy, error) {
-	query := `SELECT * FROM vacancies ORDER BY createdat DESC`
-	rows, err := repo.Dbpool.Query(context.Background(), query)
+func (repo *VacancyRepository) GetCountAll() int {
+	query := `SELECT COUNT(*) FROM vacancies`
+	var count int
+	repo.Dbpool.QueryRow(context.Background(), query).Scan(&count)
+	return count
+}
+
+func (repo *VacancyRepository) GetAllVacancies(limit, offset int) ([]Vacancy, error) {
+	query := `SELECT * FROM vacancies ORDER BY createdat DESC LIMIT @limit OFFSET @offset`
+	args := pgx.NamedArgs{
+		"limit":  limit,
+		"offset": offset,
+	}
+	if limit == 0 {
+		query = `SELECT * FROM vacancies ORDER BY createdat DESC`
+	}
+	rows, err := repo.Dbpool.Query(context.Background(), query, args)
 	if err != nil {
 		return nil, fmt.Errorf("Невозможно получить вакансии %w", err)
 	}
