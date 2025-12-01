@@ -5,6 +5,8 @@ import (
 
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/storage/postgres/v3"
 	"github.com/rs/zerolog"
 
 	"go-fiber/config"
@@ -44,11 +46,21 @@ func main() {
 	dbpool := database.CreateDbPool(dbConfig, &logGlob.Log)
 	defer dbpool.Close()
 
+	storage := postgres.New(postgres.Config{
+		DB:         dbpool,
+		Table:      "sessions",
+		Reset:      false,
+		GCInterval: 10 * time.Second,
+	})
+	store := session.New(session.Config{
+		Storage: storage,
+	})
+
 	// Репозитории
 	vacancyRepo := vacancy.NewVacancyRepository(dbpool, &logGlob.Log)
 
 	// Регистрируем обработчики
-	home.NewHomeHandler(app, &logGlob.Log, vacancyRepo)
+	home.NewHomeHandler(app, &logGlob.Log, vacancyRepo, store)
 	vacancy.NewVacancyHandler(app, &logGlob.Log, vacancyRepo)
 
 	logGlob.Info().Str("port", "3000").Msg("Server started")
