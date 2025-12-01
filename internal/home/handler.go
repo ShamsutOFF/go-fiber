@@ -30,6 +30,7 @@ func NewHomeHandler(
 	}
 
 	handler.router.Get("/", handler.home)
+	handler.router.Get("/login", handler.login)
 	handler.router.Get("/error", handler.error)
 }
 
@@ -48,4 +49,9 @@ func (h *HomeHandler) home(c *fiber.Ctx) error {
 
 func (h *HomeHandler) error(c *fiber.Ctx) error {
 	return c.SendString("Hello, World from Error 👋!")
+}
+
+func (h *HomeHandler) login(c *fiber.Ctx) error {
+	component := views.Login()
+	return tadapter.Render(c, component, http.StatusOK)
 }
