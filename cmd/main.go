@@ -14,6 +14,7 @@ import (
 	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/database"
 	logGlob "go-fiber/pkg/logger"
+	"go-fiber/pkg/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -55,6 +56,7 @@ func main() {
 	store := session.New(session.Config{
 		Storage: storage,
 	})
+	app.Use(middleware.AuthMiddleware(store))
 
 	// Репозитории
 	vacancyRepo := vacancy.NewVacancyRepository(dbpool, &logGlob.Log)
