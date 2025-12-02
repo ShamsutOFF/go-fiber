@@ -35,8 +35,11 @@ func NewHomeHandler(
 	}
 
 	handler.router.Get("/", handler.home)
+
 	handler.router.Get("/login", handler.login)
 	handler.router.Post("/api/login", handler.apiLogin)
+	handler.router.Get("/api/logout", handler.apiLogout)
+
 	handler.router.Get("/error", handler.error)
 }
 
@@ -101,4 +104,17 @@ func (h *HomeHandler) apiLogin(c *fiber.Ctx) error {
 	}
 	component := components.Notification("Неверный логин или пароль", components.NotificationFail)
 	return tadapter.Render(c, component, http.StatusBadRequest)
+}
+
+func (h *HomeHandler) apiLogout(c *fiber.Ctx) error {
+	sess, err := h.store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+	sess.Delete("email")
+	if err := sess.Save(); err != nil {
+		panic(err)
+	}
+	c.Response().Header.Add("Hx-Redirect", "/")
+	return c.Redirect("/", http.StatusOK)
 }

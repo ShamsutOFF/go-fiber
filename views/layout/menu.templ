@@ -14,7 +14,11 @@ templ Menu() {
 				<a class="menu_right-link" href="/login">Войти</a>
 			} else {
 				<span class="menu_right__email">{ email }</span>
-				<a class="menu_right-link" href="/login">Выйти</a>
+				<a
+					class="menu_right-link"
+					hx-get="/api/logout"
+					hx-trigger="click"
+				>Выйти</a>
 			}
 			@components.LinkButton("/register") {
 				<span>Зарегистрироваться</span>
@@ -52,7 +56,7 @@ templ MenuStyle() {
             font-size: 16px;
             cursor: pointer;
         }
-        
+
         .menu_right-link:hover{
             color: #9f9f9f;
         }
