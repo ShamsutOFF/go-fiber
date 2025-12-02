@@ -4,6 +4,7 @@ import (
 	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/tadapter"
 	"go-fiber/views"
+	"go-fiber/views/components"
 	"math"
 
 	"net/http"
@@ -35,6 +36,7 @@ func NewHomeHandler(
 
 	handler.router.Get("/", handler.home)
 	handler.router.Get("/login", handler.login)
+	handler.router.Post("/api/login", handler.apiLogin)
 	handler.router.Get("/error", handler.error)
 }
 
@@ -46,9 +48,11 @@ func (h *HomeHandler) home(c *fiber.Ctx) error {
 	if err != nil {
 		panic(err)
 	}
-	if name, ok := sess.Get("name").(string); ok {
-		h.customLogger.Info().Msg(name)
+	userEmail := ""
+	if email, ok := sess.Get("email").(string); ok {
+		userEmail = email
 	}
+	c.Locals("email", userEmail)
 
 	count := h.repository.GetCountAll()
 	vacancies, err := h.repository.GetAllVacancies(PAGE_ITEMS, (page-1)*PAGE_ITEMS)
@@ -70,9 +74,31 @@ func (h *HomeHandler) login(c *fiber.Ctx) error {
 	if err != nil {
 		panic(err)
 	}
-	sess.Set("name", "Адель")
-	if err := sess.Save(); err != nil {
-		panic(err)
+	userEmail := ""
+	if email, ok := sess.Get("email").(string); ok {
+		userEmail = email
 	}
+	c.Locals("email", userEmail)
 	return tadapter.Render(c, component, http.StatusOK)
+}
+
+func (h *HomeHandler) apiLogin(c *fiber.Ctx) error {
+	form := LoginForm{
+		Email:    c.FormValue("email"),
+		Password: c.FormValue("password"),
+	}
+	if form.Email == "a@a.ru" && form.Password == "1" { //Тут может быть реальная логика авторизации
+		sess, err := h.store.Get(c)
+		if err != nil {
+			panic(err)
+		}
+		sess.Set("email", form.Email)
+		if err := sess.Save(); err != nil {
+			panic(err)
+		}
+		c.Response().Header.Add("Hx-Redirect", "/")
+		c.Redirect("/", http.StatusOK)
+	}
+	component := components.Notification("Неверный логин или пароль", components.NotificationFail)
+	return tadapter.Render(c, component, http.StatusBadRequest)
 }

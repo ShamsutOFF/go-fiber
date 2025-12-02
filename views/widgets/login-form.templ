@@ -1,0 +1,46 @@
+package widgets
+
+import "go-fiber/views/components"
+
+templ LoginForm() {
+	@LoginFormStyle()
+	<div id="login-result"></div>
+	<form
+		hx-post="/api/login"
+		hx-trigger="submit"
+		hx-target-error="#login-result"
+		hx-swap="innerHTML"
+		hx-ext="response-targets"
+		class="login-form"
+	>
+		@components.Input(components.InputProps{
+			Placeholder: "Email",
+			Name:        "email",
+			Type:        "email",
+		})
+		@components.Input(components.InputProps{
+			Placeholder: "Пароль",
+			Name:        "password",
+			Type:        "password",
+		})
+		@components.SubmitButton() {
+			<div>Войти на сайт</div>
+		}
+	</form>
+}
+
+templ LoginFormStyle() {
+	<style>
+	#login-result {
+		margin-bottom: 10px;
+	}
+	
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        max-width: 520px;
+    }
+    </style>
+}
