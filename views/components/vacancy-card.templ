@@ -2,8 +2,10 @@ package components
 
 import "time"
 import "github.com/rvflash/elapsed"
+import "strconv"
 
 type VacancyCardProps struct {
+	Id          uint
 	Createdat   time.Time
 	Email       string
 	Location    string
@@ -17,7 +19,11 @@ templ VacancyCard(props VacancyCardProps) {
 	{{ date := elapsed.LocalTime(props.Createdat, "ru") }}
 	@VacancyCardStyle()
 	@VacancyCardScript()
-	<div class="vacancy-card">
+	<div
+		class="vacancy-card"
+		vacancy-data-id={ strconv.Itoa(int(props.Id)) }
+		vacancy-data={ templ.JSONString(props) }
+	>
 		<div>
 			<span class="vacancy-card__cretedat">{ date }</span>
 		</div>
@@ -44,7 +50,10 @@ templ VacancyCard(props VacancyCardProps) {
 			//	@LinkButton("") {
 			//		<span>Откликнуться</span>
 			//	}
-			@Button(templ.JSFuncCall("submitHandler", templ.JSExpression("event"), props.Email)) {
+			//	@Button(templ.JSFuncCall("submitHandler", templ.JSExpression("event"), props.Email)) {
+			//		<span>Откликнуться</span>
+			//	}			
+			@Button(templ.JSFuncCall("submitVacancyHandler", props.Id)) {
 				<span>Откликнуться</span>
 			}
 		</div>
@@ -57,6 +66,13 @@ templ VacancyCardScript() {
         console.log(message);
         alert(message);
         console.log(event);
+    } 
+
+    function submitVacancyHandler(id) {
+        const el = document.querySelector('[vacancy-data-id="'+ id + '"]');
+        console.log(el);
+        const data = JSON.parse(el.getAttribute('vacancy-data'));
+        console.log(data);
     }
     </script>
 }
