@@ -1,21 +1,49 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: postgres_go
-    image: postgres:18-alpine  # лучше указать конкретную версию
+    image: postgres:18-alpine
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: job_fullstack  # добавить имя БД
+      POSTGRES_DB: job_fullstack
       PGDATA: /data/postgres
     volumes:
-      - postgres_data:/data/postgres  # лучше использовать именованные volumes
+      - postgres_data:/data/postgres
     ports:
       - "5432:5432"
-    restart: unless-stopped  # добавить политику перезапуска
-    healthcheck:  # добавить healthcheck
-      test: ["CMD-SHELL", "pg_isready -U admin -d job_fullstack"]
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d job_fullstack" ]
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - app-network
+
+  app:
+    container_name: app_go
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgres://admin:admin@postgres:5432/job_fullstack?sslmode=disable"
+      LOG_LEVEL: 0
+      LOG_FORMAT: "json"
+    ports:
+      - "3001:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
+
+
+networks:
+  app-network:
+    driver: bridge
