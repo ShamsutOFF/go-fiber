@@ -11,6 +11,7 @@ import (
 
 	"go-fiber/config"
 	"go-fiber/internal/home"
+	"go-fiber/internal/sitemap"
 	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/database"
 	logGlob "go-fiber/pkg/logger"
@@ -64,6 +65,7 @@ func main() {
 	// Регистрируем обработчики
 	home.NewHomeHandler(app, &logGlob.Log, vacancyRepo, store)
 	vacancy.NewVacancyHandler(app, &logGlob.Log, vacancyRepo)
+	sitemap.NewSitemapHandler(app)
 
 	logGlob.Info().Str("port", "3000").Msg("Server started")
 	logGlob.Fatal().Err(app.Listen(":3000")).Msg("Server failed to start")

@@ -32,6 +32,8 @@ templ Layout(props LayoutProps) {
 			<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/htmx-ext-response-targets@2.0.4" integrity="sha384-T41oglUPvXLGBVyRdZsVRxNWnOOqCynaPubjUVjxhsjFTKrFJGEMm3/0KGmNQ+Pg" crossorigin="anonymous"></script>
 			<meta name="description" content={ props.MetaDescription }/>
+			<meta property="og:title" content={ props.Title }/>
+			<meta property="og:description" content={ props.MetaDescription }/>
 		</head>
 		<body>
 			{ children... }
